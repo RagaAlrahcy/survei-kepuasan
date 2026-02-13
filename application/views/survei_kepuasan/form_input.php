@@ -78,7 +78,7 @@
                     </div>
                 <?php endif; ?>
 
-                <form action="<?= base_url('submit-survei') ?>" method="POST">
+                <form action="<?= base_url('submit-survei') ?>" method="POST" enctype="multipart/form-data">
 
                     <!-- 1. Data Umum -->
                     <!-- DATA DASAR -->
@@ -141,25 +141,12 @@
                                         class="text-danger">*</span></label>
                                 <p class="small text-muted mb-3">
                                     Mohon memberikan dokumentasi kegiatan survei akreditasi mulai dari pembukaan,
-                                    wawancara pimpinan, kegiatan telusur, sampai exit conference maskimal 10 foto
+                                    wawancara pimpinan, kegiatan telusur, sampai exit conference maksimal 10 foto dalam 1 file PDF
                                 </p>
-                                <p class="small text-muted mb-3">Upload 1 file yang didukung: PDF atau JPG. Maks 10
-                                    MB.
+                                <p class="small text-muted mb-3">Upload 1 file yang didukung: PDF. Maks 10 MB.
                                 </p>
 
-                                <?php if (!empty($kegiatan['dokumentasi'])): ?>
-                                    <div
-                                        class="btn btn-outline-secondary d-inline-flex align-items-center py-1 px-3 bg-light text-dark border">
-                                        <i class="bi bi-file-earmark-pdf text-danger me-2 fs-5"></i>
-                                        <span class="me-2"><?= $kegiatan['dokumentasi'] ?></span>
-                                        <i class="bi bi-x text-muted" style="cursor: pointer;"></i>
-                                    </div>
-                                <?php else: ?>
-                                    <!-- Jika readonly, tampilkan pesan saja atau disabled input -->
-                                    <div class="alert alert-light border">
-                                        <i class="bi bi-info-circle me-1"></i> Data dokumentasi diambil dari sistem.
-                                    </div>
-                                <?php endif; ?>
+                                <input type="file" class="form-control" name="dokumentasi_kegiatan" accept="application/pdf" required>
                             </div>
 
                             <!-- Hidden ID Kegiatan for submission -->

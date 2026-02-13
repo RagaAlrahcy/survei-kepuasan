@@ -215,10 +215,40 @@ class Survei_kepuasan extends CI_Controller
 
     public function submit_survei()
     {
+        // 1. Handle File Upload
+        $path_dokumentasi = '';
+        if (isset($_FILES['dokumentasi_kegiatan']) && $_FILES['dokumentasi_kegiatan']['name'] != '') {
+            $config['upload_path'] = './public/assets/dokumentasi/';
+            $config['allowed_types'] = 'pdf';
+            $config['max_size'] = 10240; // 10 MB
+            $config['encrypt_name'] = TRUE;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('dokumentasi_kegiatan')) {
+                $upload_data = $this->upload->data();
+                $path_dokumentasi = 'public/assets/dokumentasi/' . $upload_data['file_name'];
+            } else {
+                $error_msg = $this->upload->display_errors('', '');
+                $this->session->set_flashdata('error', 'Gagal upload dokumen: ' . $error_msg);
+
+                $slug = $this->input->post('slug');
+                $id = $this->input->post('id_kegiatan');
+
+                if ($slug) {
+                    redirect('form/' . $slug);
+                } else {
+                    redirect($id ? 'form/' . $id : 'form');
+                }
+                return;
+            }
+        }
+
         // Data untuk tabel t_survei_kepuasan
         $data_survei = array(
             'IdKegiatanAkreditasi' => $this->input->post('id_kegiatan'),
             'TglPengisian' => date('Y-m-d H:i:s'),
+            'PathDokumentasi' => $path_dokumentasi,
             'PersiapanWeb' => $this->input->post('persiapan_web'),
             'PersiapanSpeak' => $this->input->post('persiapan_speak'),
             'PersiapanKomunikasiPic' => $this->input->post('persiapan_komunikasi'),
