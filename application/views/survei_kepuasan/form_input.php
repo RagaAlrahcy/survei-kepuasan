@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Input Survei Kepuasan</title>
+    <title>Form Survei Kepuasan</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="<?= base_url('public/assets/favicon/favicon-lam-kprs.png') ?>">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
@@ -56,10 +58,10 @@
             <div class="col-lg-8">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold mb-0">Input Survei Kepuasan</h2>
-                    <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-secondary">
+                    <h2 class="fw-bold mb-0">Form Survei Kepuasan</h2>
+                    <!-- <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
-                    </a>
+                    </a> -->
                 </div>
 
                 <?php if ($this->session->flashdata('success')): ?>
@@ -141,12 +143,14 @@
                                         class="text-danger">*</span></label>
                                 <p class="small text-muted mb-3">
                                     Mohon memberikan dokumentasi kegiatan survei akreditasi mulai dari pembukaan,
-                                    wawancara pimpinan, kegiatan telusur, sampai exit conference maksimal 10 foto dalam 1 file PDF
+                                    wawancara pimpinan, kegiatan telusur, sampai exit conference maksimal 10 foto dalam
+                                    1 file PDF
                                 </p>
                                 <p class="small text-muted mb-3">Upload 1 file yang didukung: PDF. Maks 10 MB.
                                 </p>
 
-                                <input type="file" class="form-control" name="dokumentasi_kegiatan" accept="application/pdf" required>
+                                <input type="file" class="form-control" name="dokumentasi_kegiatan"
+                                    accept="application/pdf" required>
                             </div>
 
                             <!-- Hidden ID Kegiatan for submission -->

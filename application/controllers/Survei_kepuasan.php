@@ -27,7 +27,7 @@ class Survei_kepuasan extends CI_Controller
 
         // Defaults
         if (!$start_date)
-            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $start_date = date('Y-01-01'); // Start from beginning of year for monthly chart
         if (!$end_date)
             $end_date = date('Y-m-d');
 
@@ -48,7 +48,7 @@ class Survei_kepuasan extends CI_Controller
         $end_date = $this->input->get('end_date');
 
         if (!$start_date)
-            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $start_date = date('Y-01-01');
         if (!$end_date)
             $end_date = date('Y-m-d');
 
@@ -56,9 +56,9 @@ class Survei_kepuasan extends CI_Controller
         $daily_data = $this->Survei_model->get_survei_data($start_date, $end_date);
         $stats_data = $this->Survei_model->get_aggregated_stats($start_date, $end_date);
 
-        // --- Sheet 1: Ringkasan Harian --- //
+        // --- Sheet 1: Ringkasan Bulanan --- //
         $sheet1 = [
-            ['<b>Tanggal</b>', '<b>Sangat Baik</b>', '<b>Baik</b>', '<b>Cukup</b>', '<b>Kurang</b>', '<b>Total Responden</b>', '<b>Skor Rata-rata</b>']
+            ['<b>Bulan</b>', '<b>Sangat Baik</b>', '<b>Baik</b>', '<b>Cukup</b>', '<b>Kurang</b>', '<b>Total Responden</b>', '<b>Skor Rata-rata</b>']
         ];
         foreach ($daily_data as $row) {
             $sheet1[] = [

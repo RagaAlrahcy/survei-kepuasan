@@ -27,68 +27,57 @@ class Survei_model extends CI_Model
     {
         // Set default dates if not provided
         if (!$start_date)
-            $start_date = date('Y-m-d', strtotime('-7 days'));
+            $start_date = date('Y-m-d', strtotime('-1 year'));
         if (!$end_date)
             $end_date = date('Y-m-d');
 
-        // Query untuk mendapatkan data survei kepuasan berdasarkan tanggal
+        // Query untuk mendapatkan data survei kepuasan berdasarkan Bulan
+        // Kategori dihitung per individu responden (rata-rata 12 pertanyaan)
+        // Skor: 1-4. Sangat Baik >= 3.5, Baik >= 2.5, Cukup >= 1.5, Kurang < 1.5
+        // Total skor minimal = 12 * 3.5 = 42 for Sangat Baik
+        $formula_sum = '(PersiapanWeb + PersiapanSpeak + PersiapanKomunikasiPic + 
+                        PersiapanKecepatanRespon + PersiapanJadwalSurveior + 
+                        PersiapanAlurMekanisme + PersiapanKualitasIT + 
+                        PelaksanaanKetepatanWaktu + PelaksanaanDaring + 
+                        PelaksanaanLuring + PelaksanaanInstrumen + 
+                        PelaksanaanExitConference)';
+
         $this->db->select('
-            DATE(TglPengisian) as tanggal,
+            DATE_FORMAT(TglPengisian, "%Y-%m") as bulan_id,
+            DATE_FORMAT(TglPengisian, "%M %Y") as bulan_nama,
             COUNT(*) as total_survei,
-            ROUND(AVG(PersiapanWeb), 2) as avg_persiapan_web,
-            ROUND(AVG(PersiapanSpeak), 2) as avg_persiapan_speak,
-            ROUND(AVG(PersiapanKomunikasiPic), 2) as avg_komunikasi_pic,
-            ROUND(AVG(PersiapanKecepatanRespon), 2) as avg_kecepatan_respon,
-            ROUND(AVG(PersiapanJadwalSurveior), 2) as avg_jadwal_surveior,
-            ROUND(AVG(PersiapanAlurMekanisme), 2) as avg_alur_mekanisme,
-            ROUND(AVG(PersiapanKualitasIT), 2) as avg_kualitas_it,
-            ROUND(AVG(PelaksanaanKetepatanWaktu), 2) as avg_ketepatan_waktu,
-            ROUND(AVG(PelaksanaanDaring), 2) as avg_daring,
-            ROUND(AVG(PelaksanaanLuring), 2) as avg_luring,
-            ROUND(AVG(PelaksanaanInstrumen), 2) as avg_instrumen,
-            ROUND(AVG(PelaksanaanExitConference), 2) as avg_exit_conference,
-            ROUND(AVG((PersiapanWeb + PersiapanSpeak + PersiapanKomunikasiPic + 
-                       PersiapanKecepatanRespon + PersiapanJadwalSurveior + 
-                       PersiapanAlurMekanisme + PersiapanKualitasIT + 
-                       PelaksanaanKetepatanWaktu + PelaksanaanDaring + 
-                       PelaksanaanLuring + PelaksanaanInstrumen + 
-                       PelaksanaanExitConference) / 12), 2) as skor_rata_rata
+            SUM(CASE WHEN (' . $formula_sum . ' / 12) >= 3.5 THEN 1 ELSE 0 END) as sangat_baik,
+            SUM(CASE WHEN (' . $formula_sum . ' / 12) >= 2.5 AND (' . $formula_sum . ' / 12) < 3.5 THEN 1 ELSE 0 END) as baik,
+            SUM(CASE WHEN (' . $formula_sum . ' / 12) >= 1.5 AND (' . $formula_sum . ' / 12) < 2.5 THEN 1 ELSE 0 END) as cukup,
+            SUM(CASE WHEN (' . $formula_sum . ' / 12) < 1.5 THEN 1 ELSE 0 END) as kurang,
+            ROUND(AVG(' . $formula_sum . ' / 12), 2) as skor_rata_rata
         ');
         $this->db->from('t_survei_kepuasan');
         $this->db->where('DATE(TglPengisian) >=', $start_date);
         $this->db->where('DATE(TglPengisian) <=', $end_date);
-        $this->db->group_by('DATE(TglPengisian)');
-        $this->db->order_by('TglPengisian', 'ASC');
+        $this->db->group_by('bulan_id');
+        $this->db->order_by('bulan_id', 'ASC');
 
         $query = $this->db->get();
         $results = $query->result_array();
 
         // Format data untuk dashboard
         $data = [];
-        foreach ($results as $row) {
-            $skor = $row['skor_rata_rata'];
+        $en_months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $id_months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-            // Kategorisasi berdasarkan skor rata-rata (skala 1-4)
-            // 1 = Kurang | 2 = Cukup | 3 = Baik | 4 = Sangat Baik
-            $sangat_baik = $skor >= 3.5 ? $row['total_survei'] : 0;
-            $baik = ($skor >= 2.5 && $skor < 3.5) ? $row['total_survei'] : 0;
-            $cukup = ($skor >= 1.5 && $skor < 2.5) ? $row['total_survei'] : 0;
-            $kurang = $skor < 1.5 ? $row['total_survei'] : 0;
+        foreach ($results as $row) {
+            $bulan_label = str_ireplace($en_months, $id_months, $row['bulan_nama']);
 
             $data[] = [
-                'tanggal' => $row['tanggal'],
-                'sangat_baik' => $sangat_baik,
-                'baik' => $baik,
-                'cukup' => $cukup,
-                'kurang' => $kurang,
-                'total_responden' => $row['total_survei'],
-                'skor_rata_rata' => $row['skor_rata_rata']
+                'tanggal' => $bulan_label, // Tetap gunakan key 'tanggal' agar kompatibel dengan View
+                'sangat_baik' => (int) $row['sangat_baik'],
+                'baik' => (int) $row['baik'],
+                'cukup' => (int) $row['cukup'],
+                'kurang' => (int) $row['kurang'],
+                'total_responden' => (int) $row['total_survei'],
+                'skor_rata_rata' => (float) $row['skor_rata_rata']
             ];
-        }
-
-        // Jika tidak ada data, return array kosong
-        if (empty($data)) {
-            return [];
         }
 
         return $data;

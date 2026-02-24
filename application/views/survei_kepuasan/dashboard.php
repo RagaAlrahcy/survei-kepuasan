@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Survei Kepuasan</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="<?= base_url('public/assets/favicon/favicon-lam-kprs.png') ?>">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -214,7 +216,7 @@
             <div class="col-12">
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-graph-up me-2"></i> Grafis Kepuasan</span>
+                        <span><i class="bi bi-graph-up me-2"></i> Grafik Kepuasan Per Bulan</span>
                         <button id="btn-export-chart" class="btn btn-sm btn-outline-primary rounded-pill">
                             <i class="bi bi-image me-1"></i> Simpan Gambar
                         </button>
@@ -586,26 +588,26 @@
                     baik: [],
                     sangat_baik: []
                 };
-                
+
                 keys.forEach(key => {
                     result.kurang.push(statsData[key + '_1'] ? parseInt(statsData[key + '_1']) : 0);
                     result.cukup.push(statsData[key + '_2'] ? parseInt(statsData[key + '_2']) : 0);
                     result.baik.push(statsData[key + '_3'] ? parseInt(statsData[key + '_3']) : 0);
                     result.sangat_baik.push(statsData[key + '_4'] ? parseInt(statsData[key + '_4']) : 0);
                 });
-                
+
                 return result;
             }
 
             // --- Chart Persiapan ---
             const ctxPersiapan = document.getElementById('chartPersiapan').getContext('2d');
             const keysPersiapan = [
-                'PersiapanWeb', 'PersiapanSpeak', 'PersiapanKomunikasiPic', 
-                'PersiapanKecepatanRespon', 'PersiapanJadwalSurveior', 
+                'PersiapanWeb', 'PersiapanSpeak', 'PersiapanKomunikasiPic',
+                'PersiapanKecepatanRespon', 'PersiapanJadwalSurveior',
                 'PersiapanAlurMekanisme', 'PersiapanKualitasIT'
             ];
             const labelsPersiapan = [
-                '1. Web KPRS', '2. Aplikasi SPEAK', '3. Komunikasi PIC', 
+                '1. Web KPRS', '2. Aplikasi SPEAK', '3. Komunikasi PIC',
                 '4. Kecepatan Respon', '5. Jadwal & Surveyor', '6. Alur Mekanisme', '7. Kualitas IT'
             ];
             const dataPersiapan = getChartData(keysPersiapan);
@@ -615,15 +617,15 @@
             // --- Chart Pelaksanaan ---
             const ctxPelaksanaan = document.getElementById('chartPelaksanaan').getContext('2d');
             const keysPelaksanaan = [
-                'PelaksanaanKetepatanWaktu', 'PelaksanaanDaring', 'PelaksanaanLuring', 
+                'PelaksanaanKetepatanWaktu', 'PelaksanaanDaring', 'PelaksanaanLuring',
                 'PelaksanaanInstrumen', 'PelaksanaanExitConference'
             ];
             const labelsPelaksanaan = [
-                '1. Ketepatan Waktu', '2a. Daring', '2b. Luring', 
+                '1. Ketepatan Waktu', '2a. Daring', '2b. Luring',
                 '2c. Instrumen', '3. Exit Conference'
             ];
             const dataPelaksanaan = getChartData(keysPelaksanaan);
-            
+
             // Shared Options
             const groupedBarOptions = {
                 responsive: true,
@@ -631,7 +633,7 @@
                 plugins: {
                     legend: { position: 'top' },
                     tooltip: {
-                         callbacks: {
+                        callbacks: {
                             label: function (context) {
                                 return ' ' + context.dataset.label + ': ' + context.parsed.y + ' RS';
                             }
@@ -649,10 +651,10 @@
                 data: {
                     labels: labelsPersiapan,
                     datasets: [
-                         { label: 'Kurang', data: dataPersiapan.kurang, backgroundColor: '#6c757d', borderRadius: 4 }, // Gray
-                         { label: 'Cukup', data: dataPersiapan.cukup, backgroundColor: '#4285f4', borderRadius: 4 }, // Google Blue
-                         { label: 'Baik', data: dataPersiapan.baik, backgroundColor: '#ea4335', borderRadius: 4 },   // Google Red
-                         { label: 'Sangat Baik', data: dataPersiapan.sangat_baik, backgroundColor: '#fbbc05', borderRadius: 4 } // Google Yellow
+                        { label: 'Kurang', data: dataPersiapan.kurang, backgroundColor: '#6c757d', borderRadius: 4 }, // Gray
+                        { label: 'Cukup', data: dataPersiapan.cukup, backgroundColor: '#4285f4', borderRadius: 4 }, // Google Blue
+                        { label: 'Baik', data: dataPersiapan.baik, backgroundColor: '#ea4335', borderRadius: 4 },   // Google Red
+                        { label: 'Sangat Baik', data: dataPersiapan.sangat_baik, backgroundColor: '#fbbc05', borderRadius: 4 } // Google Yellow
                     ]
                 },
                 options: groupedBarOptions
@@ -663,10 +665,10 @@
                 data: {
                     labels: labelsPelaksanaan,
                     datasets: [
-                         { label: 'Kurang', data: dataPelaksanaan.kurang, backgroundColor: '#6c757d', borderRadius: 4 },
-                         { label: 'Cukup', data: dataPelaksanaan.cukup, backgroundColor: '#4285f4', borderRadius: 4 },
-                         { label: 'Baik', data: dataPelaksanaan.baik, backgroundColor: '#ea4335', borderRadius: 4 },
-                         { label: 'Sangat Baik', data: dataPelaksanaan.sangat_baik, backgroundColor: '#fbbc05', borderRadius: 4 }
+                        { label: 'Kurang', data: dataPelaksanaan.kurang, backgroundColor: '#6c757d', borderRadius: 4 },
+                        { label: 'Cukup', data: dataPelaksanaan.cukup, backgroundColor: '#4285f4', borderRadius: 4 },
+                        { label: 'Baik', data: dataPelaksanaan.baik, backgroundColor: '#ea4335', borderRadius: 4 },
+                        { label: 'Sangat Baik', data: dataPelaksanaan.sangat_baik, backgroundColor: '#fbbc05', borderRadius: 4 }
                     ]
                 },
                 options: groupedBarOptions
