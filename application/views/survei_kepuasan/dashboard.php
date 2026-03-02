@@ -152,14 +152,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="bi bi-house-door me-1"></i> Beranda</a>
+                        <a class="nav-link active" href="https://akreditasi.lam-kprs.id/"><i
+                                class="bi bi-house-door me-1"></i> Beranda</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Pengaturan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="bi bi-person-circle me-1"></i> Admin</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -170,8 +171,8 @@
         <!-- Header Section -->
         <div class="row mb-5 align-items-center">
             <div class="col-md-6">
-                <h1 class="display-6 fw-bold mb-1">Analisis Kepuasan</h1>
-                <p class="text-muted mb-0">Pantau performa pelayanan secara real-time</p>
+                <h1 class="display-6 fw-bold mb-1">Monitoring Kepuasan Survei</h1>
+                <!-- <p class="text-muted mb-0">Pantau performa pelayanan secara real-time</p> -->
             </div>
             <div class="col-md-6 text-md-end">
                 <span class="badge bg-light text-primary p-3 rounded-pill">
@@ -421,7 +422,7 @@
 
         <footer class="mt-5 text-center text-muted small">
             <p>&copy;
-                <?= date('Y') ?> Sistem Survei Kepuasan. All rights reserved.
+                <?= date('Y') ?> Monitoring Kepuasan Survei. All rights reserved.
             </p>
         </footer>
 
