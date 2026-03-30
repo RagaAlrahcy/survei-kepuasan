@@ -395,11 +395,29 @@
             <div class="col-12 mb-4">
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-bar-chart-steps me-2"></i> Grafik Penilaian Persiapan Survei</span>
+                        <span><i class="bi bi-pie-chart-fill me-2"></i> Grafik Penilaian Persiapan Survei</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-image me-1"></i> Simpan Gambar
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('chartPersiapan', 'grafik-bar-persiapan.jpg'); return false;"><i class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('pieChartPersiapan', 'grafik-pie-persiapan.jpg'); return false;"><i class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="chartPersiapan"></canvas>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="chart-container">
+                                    <canvas id="chartPersiapan"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chart-container">
+                                    <canvas id="pieChartPersiapan"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -409,11 +427,29 @@
             <div class="col-12">
                 <div class="card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-bar-chart-steps me-2"></i> Grafik Penilaian Pelaksanaan Survei</span>
+                        <span><i class="bi bi-pie-chart-fill me-2"></i> Grafik Penilaian Pelaksanaan Survei</span>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-image me-1"></i> Simpan Gambar
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('chartPelaksanaan', 'grafik-bar-pelaksanaan.jpg'); return false;"><i class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('pieChartPelaksanaan', 'grafik-pie-pelaksanaan.jpg'); return false;"><i class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="chartPelaksanaan"></canvas>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="chart-container">
+                                    <canvas id="chartPelaksanaan"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chart-container">
+                                    <canvas id="pieChartPelaksanaan"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -431,9 +467,12 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Register DataLabels Plugin
+            Chart.register(ChartDataLabels);
             // Initialize Tooltips
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -501,6 +540,9 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
+                        datalabels: {
+                            display: false // Hide data labels on the main chart to avoid clutter
+                        },
                         legend: {
                             position: 'top',
                             align: 'end',
@@ -557,29 +599,30 @@
                 }
             });
 
-            // Export Chart Image Logic
+            // Export Chart Image Logic (Main Chart)
             document.getElementById('btn-export-chart').addEventListener('click', function () {
-                const canvas = document.getElementById('satisfactionChart');
+                exportCanvas('satisfactionChart', 'grafik-kepuasan.jpg');
+            });
 
-                // Create a temporary canvas to handle background color
+            // Generic Function to Export Any Canvas
+            window.exportCanvas = function (canvasId, filename) {
+                const canvas = document.getElementById(canvasId);
+                if (!canvas) return;
+
                 const compositeCanvas = document.createElement('canvas');
                 compositeCanvas.width = canvas.width;
                 compositeCanvas.height = canvas.height;
 
                 const context = compositeCanvas.getContext('2d');
-
-                // Fill with white background (because JPEG doesn't support transparency)
                 context.fillStyle = '#FFFFFF';
                 context.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Draw the chart onto the white background
                 context.drawImage(canvas, 0, 0);
 
                 const link = document.createElement('a');
-                link.download = 'grafik-kepuasan.jpg';
+                link.download = filename;
                 link.href = compositeCanvas.toDataURL('image/jpeg', 1.0);
                 link.click();
-            });
+            };
 
             // --- Helper to parse stats data for charts ---
             function getChartData(keys) {
@@ -639,13 +682,70 @@
                                 return ' ' + context.dataset.label + ': ' + context.parsed.y + ' RS';
                             }
                         }
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        color: '#4a5568',
+                        font: { size: 10, weight: 'bold' },
+                        formatter: function(value, context) {
+                            if (value === 0) return '';
+                            let total = 0;
+                            context.chart.data.datasets.forEach(ds => {
+                                total += ds.data[context.dataIndex];
+                            });
+                            return ((value / total) * 100).toFixed(0) + '%';
+                        }
                     }
                 },
                 scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Jumlah RS' } },
+                    y: { 
+                        beginAtZero: true, 
+                        title: { display: true, text: 'Jumlah RS' },
+                        grace: '10%'
+                    },
                     x: { grid: { display: false } }
                 }
             };
+
+            const pieOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const value = context.parsed;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return ' ' + context.label + ': ' + value + ' (' + percentage + '%)';
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: { weight: 'bold', size: 12 },
+                        formatter: function(value, context) {
+                            if (value === 0) return '';
+                            const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            return ((value / total) * 100).toFixed(1) + '%';
+                        }
+                    }
+                }
+            };
+
+            function getAggregatedPieData(dataObj) {
+                return [
+                    dataObj.kurang.reduce((a, b) => a + b, 0),
+                    dataObj.cukup.reduce((a, b) => a + b, 0),
+                    dataObj.baik.reduce((a, b) => a + b, 0),
+                    dataObj.sangat_baik.reduce((a, b) => a + b, 0)
+                ];
+            }
+
+            const pieColors = ['#6c757d', '#4285f4', '#ea4335', '#fbbc05'];
+            const pieLabels = ['Kurang', 'Cukup', 'Baik', 'Sangat Baik'];
 
             new Chart(ctxPersiapan, {
                 type: 'bar',
@@ -661,6 +761,21 @@
                 options: groupedBarOptions
             });
 
+            // Pie Chart Persiapan
+            const ctxPiePersiapan = document.getElementById('pieChartPersiapan').getContext('2d');
+            new Chart(ctxPiePersiapan, {
+                type: 'pie',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: getAggregatedPieData(dataPersiapan),
+                        backgroundColor: pieColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: pieOptions
+            });
+
             new Chart(ctxPelaksanaan, {
                 type: 'bar',
                 data: {
@@ -673,6 +788,21 @@
                     ]
                 },
                 options: groupedBarOptions
+            });
+
+            // Pie Chart Pelaksanaan
+            const ctxPiePelaksanaan = document.getElementById('pieChartPelaksanaan').getContext('2d');
+            new Chart(ctxPiePelaksanaan, {
+                type: 'pie',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: getAggregatedPieData(dataPelaksanaan),
+                        backgroundColor: pieColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: pieOptions
             });
         });
     </script>
