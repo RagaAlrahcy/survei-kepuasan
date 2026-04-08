@@ -59,3 +59,7 @@ $route['export-csv'] = 'survei_kepuasan/export_csv';
 $route['form/(:any)'] = 'survei_kepuasan/input/$1';
 $route['form'] = 'survei_kepuasan/input';
 $route['submit-survei'] = 'survei_kepuasan/submit_survei';
+
+$route['feedback-surveior'] = 'kepuasan_surveior';
+$route['export-feedback-surveior'] = 'kepuasan_surveior/export_excel';
+

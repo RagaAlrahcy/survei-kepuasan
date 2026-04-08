@@ -152,7 +152,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="https://akreditasi.lam-kprs.id/"><i
+                        <a class="nav-link" href="<?= base_url('feedback-surveior') ?>"><i
+                                class="bi bi-people-fill me-1"></i> Kepuasan Surveyor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://akreditasi.lam-kprs.id/"><i
                                 class="bi bi-house-door me-1"></i> Beranda</a>
                     </li>
                     <!-- <li class="nav-item">
@@ -171,7 +175,7 @@
         <!-- Header Section -->
         <div class="row mb-5 align-items-center">
             <div class="col-md-6">
-                <h1 class="display-6 fw-bold mb-1">Monitoring Kepuasan Survei</h1>
+                <h1 class="display-6 fw-bold mb-1">Monitoring Survei Kepuasan</h1>
                 <!-- <p class="text-muted mb-0">Pantau performa pelayanan secara real-time</p> -->
             </div>
             <div class="col-md-6 text-md-end">
@@ -397,12 +401,17 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span><i class="bi bi-pie-chart-fill me-2"></i> Grafik Penilaian Persiapan Survei</span>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-image me-1"></i> Simpan Gambar
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('chartPersiapan', 'grafik-bar-persiapan.jpg'); return false;"><i class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('pieChartPersiapan', 'grafik-pie-persiapan.jpg'); return false;"><i class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="exportCanvas('chartPersiapan', 'grafik-bar-persiapan.jpg'); return false;"><i
+                                            class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="exportCanvas('pieChartPersiapan', 'grafik-pie-persiapan.jpg'); return false;"><i
+                                            class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
                             </ul>
                         </div>
                     </div>
@@ -429,12 +438,17 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span><i class="bi bi-pie-chart-fill me-2"></i> Grafik Penilaian Pelaksanaan Survei</span>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-image me-1"></i> Simpan Gambar
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('chartPelaksanaan', 'grafik-bar-pelaksanaan.jpg'); return false;"><i class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="exportCanvas('pieChartPelaksanaan', 'grafik-pie-pelaksanaan.jpg'); return false;"><i class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="exportCanvas('chartPelaksanaan', 'grafik-bar-pelaksanaan.jpg'); return false;"><i
+                                            class="bi bi-bar-chart-steps me-2"></i>Bar Chart</a></li>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="exportCanvas('pieChartPelaksanaan', 'grafik-pie-pelaksanaan.jpg'); return false;"><i
+                                            class="bi bi-pie-chart-fill me-2"></i>Pie Chart</a></li>
                             </ul>
                         </div>
                     </div>
@@ -688,7 +702,7 @@
                         align: 'end',
                         color: '#4a5568',
                         font: { size: 10, weight: 'bold' },
-                        formatter: function(value, context) {
+                        formatter: function (value, context) {
                             if (value === 0) return '';
                             let total = 0;
                             context.chart.data.datasets.forEach(ds => {
@@ -699,8 +713,8 @@
                     }
                 },
                 scales: {
-                    y: { 
-                        beginAtZero: true, 
+                    y: {
+                        beginAtZero: true,
                         title: { display: true, text: 'Jumlah RS' },
                         grace: '10%'
                     },
@@ -726,7 +740,7 @@
                     datalabels: {
                         color: '#fff',
                         font: { weight: 'bold', size: 12 },
-                        formatter: function(value, context) {
+                        formatter: function (value, context) {
                             if (value === 0) return '';
                             const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                             return ((value / total) * 100).toFixed(1) + '%';
