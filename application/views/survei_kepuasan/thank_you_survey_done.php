@@ -158,6 +158,16 @@
             Terimakasih Anda Sudah Mengisikan Ulasan Kuisioner.
         </p>
 
+        <?php if (!empty($kegiatan['PathSertifikat'])): ?>
+            <div class="certificate-section mt-4 p-4 border rounded-4 bg-light">
+                <p class="small text-muted mb-3">Sertifikat akreditasi Anda sudah tersedia untuk diunduh:</p>
+                <a href="<?= $kegiatan['PathSertifikat']; ?>" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2 py-3 rounded-3 shadow-sm border-0" target="_blank" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <i class="bi bi-download"></i>
+                    <span>Unduh Sertifikat</span>
+                </a>
+            </div>
+        <?php endif; ?>
+
     </div>
 
 </body>

@@ -188,7 +188,7 @@ class Survei_kepuasan extends CI_Controller
 
                 // Cek apakah survei sudah diisi sebelumnya
                 if ($this->Survei_model->check_existing_survey($data['id_kegiatan'])) {
-                    $this->load->view('survei_kepuasan/thank_you_survey_done');
+                    $this->load->view('survei_kepuasan/thank_you_survey_done', $data);
                     return;
                 }
 

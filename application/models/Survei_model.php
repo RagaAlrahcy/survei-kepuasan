@@ -185,6 +185,7 @@ class Survei_model extends CI_Model
         $this->db_speak->select('
             ta.IdKegiatanAkreditasi,
             ta.Slug,
+            ta.PathSertifikat,
             mrs.Nama as nama_rs,
             mr.NamaPanggilan as pic,
             mr.NomorHp as no_hp,
@@ -209,6 +210,7 @@ class Survei_model extends CI_Model
         $this->db_speak->select('
             ta.IdKegiatanAkreditasi,
             ta.Slug,
+            ta.PathSertifikat,
             mrs.Nama as nama_rs,
             mr.NamaPanggilan as pic,
             mr.NomorHp as no_hp,
