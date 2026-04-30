@@ -148,7 +148,7 @@ class Surveior_model extends CI_Model
 
         $rs_map = [];
         if (!empty($ids)) {
-            $this->db_speak->select('ta.IdKegiatanAkreditasi, mrs.Nama as nama_rs');
+            $this->db_speak->select('ta.IdKegiatanAkreditasi, mrs.Nama as nama_rs, mrs.KodeRs as kode_rs');
             $this->db_speak->from('t_akreditasi ta');
             $this->db_speak->join('m_rumah_sakit mrs', 'mrs.IdRumahSakit = ta.IdRumahSakit', 'left');
             $this->db_speak->where_in('ta.IdKegiatanAkreditasi', $ids);
@@ -156,14 +156,19 @@ class Surveior_model extends CI_Model
             $rs_results = $this->db_speak->get()->result_array();
 
             foreach ($rs_results as $rs) {
-                $rs_map[$rs['IdKegiatanAkreditasi']] = $rs['nama_rs'];
+                $rs_map[$rs['IdKegiatanAkreditasi']] = [
+                    'nama_rs' => $rs['nama_rs'],
+                    'kode_rs' => $rs['kode_rs']
+                ];
             }
         }
 
         // 4. Final mapping
         foreach ($details as &$row) {
             $row['nama_surveior'] = $member_map[$row['IdMemberData']] ?? 'Unknown';
-            $row['nama_rs'] = $rs_map[$row['IdKegiatanAkreditasi']] ?? 'Unknown RS';
+            $rs_data = $rs_map[$row['IdKegiatanAkreditasi']] ?? null;
+            $row['nama_rs'] = $rs_data ? $rs_data['nama_rs'] : 'Unknown RS';
+            $row['kode_rs'] = $rs_data ? $rs_data['kode_rs'] : '-';
         }
 
         return $details;

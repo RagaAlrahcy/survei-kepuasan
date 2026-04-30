@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
 
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -301,6 +305,7 @@
                         <thead>
                             <tr>
                                 <th class="ps-4">Tanggal Pengisian</th>
+                                <th>Kode RS</th>
                                 <th width="250px">Nama RS</th>
                                 <?php if ($surveyor_id == 'all'): ?>
                                     <th>Nama Surveior</th>
@@ -323,6 +328,11 @@
                                 <tr>
                                     <td class="ps-4 small text-muted">
                                         <?= date('d/m/Y H:i', strtotime($row['TglPengisian'])) ?>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary fw-bold border border-primary border-opacity-10">
+                                            <?= $row['kode_rs'] ?>
+                                        </span>
                                     </td>
                                     <td class="fw-bold"><?= $row['nama_rs'] ?></td>
                                     <?php if ($surveyor_id == 'all'): ?>
@@ -365,6 +375,10 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
     <script>
         $(document).ready(function () {
             // Initialize tooltips
@@ -372,6 +386,13 @@
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
+
+            // Initialize Select2
+            $('.select2').select2({
+                theme: 'bootstrap-5',
+                width: '100%'
+            });
+
 
             $('#surveyTable').DataTable({
 

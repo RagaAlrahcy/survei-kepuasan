@@ -40,13 +40,14 @@ class Kepuasan_surveior extends CI_Controller
         $survey_details = $this->Surveior_model->get_survey_details($id_member);
         
         $sheet = [
-            ['<b>Tanggal Pengisian</b>', '<b>Nama RS</b>', '<b>Nama Surveior</b>', '<b>Interaksi</b>', '<b>Waktu</b>', '<b>Komunikasi</b>', '<b>Sikap</b>', '<b>Rata-rata</b>']
+            ['<b>Tanggal Pengisian</b>', '<b>Kode RS</b>', '<b>Nama RS</b>', '<b>Nama Surveior</b>', '<b>Interaksi</b>', '<b>Waktu</b>', '<b>Komunikasi</b>', '<b>Sikap</b>', '<b>Rata-rata</b>']
         ];
 
         foreach ($survey_details as $row) {
             $avg_row = ($row['InteraksiSurveior'] + $row['KetepatanWaktu'] + $row['KemampuanKomunikasi'] + $row['SikapPerilaku']) / 4;
             $sheet[] = [
                 date('d/m/Y H:i', strtotime($row['TglPengisian'])),
+                $row['kode_rs'],
                 $row['nama_rs'],
                 $row['nama_surveior'],
                 $row['InteraksiSurveior'],
