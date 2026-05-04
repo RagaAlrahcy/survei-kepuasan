@@ -38,8 +38,8 @@
         }
 
         .form-check-input:checked {
-            background-color: #667eea;
-            border-color: #667eea;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
         }
 
         .section-title {
@@ -58,11 +58,40 @@
             <div class="col-lg-8">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold mb-0">Form Survei Kepuasan</h2>
+                    <h2 class="fw-bold mb-0">Form Kuesioner Survei Kepuasan</h2>
                     <!-- <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
                     </a> -->
                 </div>
+
+                <div class="card mb-4 border-0 shadow-sm overflow-hidden"
+                    style="border-left: 5px solid #0d6efd !important;">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <h6 class="fw-bold mb-2" style="color: #0d6efd;">Deskripsi :</h6>
+                            <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+                                Dalam rangka meningkatkan mutu pelayanan kepada mitra Kerjasama, LAM-KPRS ingin
+                                mengetahui persepsi atau penilaian pelaksanaan survei akreditasi rumah sakit.
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2" style="color: #0d6efd;">Tujuan :</h6>
+                            <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.6;">
+                                Untuk mendapatkan umpan balik pelaksanaan survei demi peningkatan mutu pelayanan
+                                LAM-KPRS kepada Rumah Sakit, sesuai dengan Nilai-nilai LAM-KPRS: <strong>loyalitas,
+                                    akuntabel, mandiri, komitmen, profesional, responsif dan sinergi.</strong>
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-3" style="background-color: #ebf5ff; border: 1px dashed #0d6efd;">
+                            <p class="mb-0 fw-medium text-dark" style="font-size: 0.95rem;">
+                                <i class="bi bi-info-circle-fill me-2" style="color: #0d6efd;"></i>
+                                Untuk mengunduh sertifikat akreditasi, diwajibkan untuk mengisi kuesioner survei
+                                kepuasan terlebih dahulu. Terima kasih
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
 
                 <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -85,47 +114,67 @@
                     <!-- 1. Data Umum -->
                     <!-- DATA DASAR -->
                     <div class="card mb-4 overflow-hidden border-0 shadow-sm">
-                        <div class="card-header text-white p-3" style="background-color: #6f42c1;">
+                        <div class="card-header text-white p-3" style="background-color: #0d6efd;">
                             <h5 class="mb-0 fw-bold text-uppercase" style="font-size: 1rem; letter-spacing: 0.5px;">Data
                                 Dasar</h5>
                         </div>
                         <div class="card-body p-4">
                             <!-- Nama Rumah Sakit -->
                             <div class="mb-4">
-                                <label class="form-label text-dark fw-bold">Nama Rumah Sakit <span
-                                        class="text-danger">*</span></label>
+                                <label class="form-label text-dark fw-bold">Nama Rumah Sakit
+                                    <span class="badge bg-light text-primary border border-primary-subtle ms-2"
+                                        style="font-size: 0.65rem; font-weight: 500;">
+                                        <i class="bi bi-cpu-fill me-1"></i> Terisi Otomatis
+                                    </span>
+                                </label>
                                 <input type="text" class="form-control-plaintext border-bottom"
                                     value="<?= isset($kegiatan['nama_rs']) ? $kegiatan['nama_rs'] : '' ?>" readonly>
                             </div>
 
                             <!-- Narahubung Rumah Sakit -->
                             <div class="mb-4">
-                                <label class="form-label text-dark fw-bold">Narahubung Rumah Sakit <span
-                                        class="text-danger">*</span></label>
+                                <label class="form-label text-dark fw-bold">Narahubung Rumah Sakit
+                                    <span class="badge bg-light text-primary border border-primary-subtle ms-2"
+                                        style="font-size: 0.65rem; font-weight: 500;">
+                                        <i class="bi bi-cpu-fill me-1"></i> Terisi Otomatis
+                                    </span>
+                                </label>
                                 <input type="text" class="form-control-plaintext border-bottom"
                                     value="<?= isset($kegiatan['pic']) ? $kegiatan['pic'] : '' ?>" readonly>
                             </div>
 
                             <!-- Nomor HP -->
                             <div class="mb-4">
-                                <label class="form-label text-dark fw-bold">Nomor HP <span
-                                        class="text-danger">*</span></label>
+                                <label class="form-label text-dark fw-bold">Nomor HP
+                                    <span class="badge bg-light text-primary border border-primary-subtle ms-2"
+                                        style="font-size: 0.65rem; font-weight: 500;">
+                                        <i class="bi bi-cpu-fill me-1"></i> Terisi Otomatis
+                                    </span>
+                                </label>
                                 <input type="text" class="form-control-plaintext border-bottom"
                                     value="<?= isset($kegiatan['no_hp']) ? $kegiatan['no_hp'] : '' ?>" readonly>
                             </div>
 
                             <!-- Alamat -->
                             <div class="mb-4">
-                                <label class="form-label text-dark fw-bold">Alamat <span
-                                        class="text-danger">*</span></label>
+                                <label class="form-label text-dark fw-bold">Alamat
+                                    <span class="badge bg-light text-primary border border-primary-subtle ms-2"
+                                        style="font-size: 0.65rem; font-weight: 500;">
+                                        <i class="bi bi-cpu-fill me-1"></i> Terisi Otomatis
+                                    </span>
+                                </label>
                                 <input type="text" class="form-control-plaintext border-bottom"
                                     value="<?= isset($kegiatan['alamat']) ? $kegiatan['alamat'] : '' ?>" readonly>
                             </div>
 
                             <!-- Tanggal Survei -->
                             <div class="mb-4">
-                                <label class="form-label text-dark fw-bold">Tanggal Survei <span
-                                        class="text-danger">*</span></label>
+                                <label class="form-label text-dark fw-bold">Tanggal Survei
+                                    <span class="badge bg-light text-primary border border-primary-subtle ms-2"
+                                        style="font-size: 0.65rem; font-weight: 500;">
+                                        <i class="bi bi-cpu-fill me-1"></i> Terisi Otomatis
+                                    </span>
+                                </label>
                                 <div>
                                     <small class="text-muted d-block mb-1">Tanggal</small>
                                     <div class="d-flex align-items-center border-bottom pb-1" style="max-width: 200px;">
